@@ -1,11 +1,16 @@
 package com.ih.clientmanagmentsystem;
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+import server.AppServer;
 
-@SpringBootApplication
 public class ClientmanagmentsystemApplication {
     public static void main(String[] args) {
-        SpringApplication.run(ClientmanagmentsystemApplication.class, args);
+        try {
+            AppServer server = new AppServer(8082);
+            server.start();
+            System.out.println("Client Management System started on http://localhost:8082");
+        } catch (Exception e) {
+            System.err.println("Failed to start server: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
 }

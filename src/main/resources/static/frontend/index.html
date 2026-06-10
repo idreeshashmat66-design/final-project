@@ -2,9 +2,100 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Client Management System Pro</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 <body>
+<header>
+    <div class="header-inner">
+        <div class="logo"><span class="logo-icon">📋</span><span class="logo-text">Client Manager Pro</span></div>
+        <div class="theme-toggle">
+            <button id="themeToggle" class="btn-icon">🌙</button>
+            <button id="exportBtn" class="btn-ghost">📎 Export CSV</button>
+        </div>
+    </div>
+</header>
 
+<!-- Dashboard Stats Cards -->
+<div class="dashboard-cards">
+    <div class="card"><h3>Total Clients</h3><p id="totalCount">0</p></div>
+    <div class="card active"><h3>Active</h3><p id="activeCount">0</p></div>
+    <div class="card inactive"><h3>Inactive</h3><p id="inactiveCount">0</p></div>
+    <div class="card"><h3>Recent Added</h3><p id="recentCount">0</p></div>
+</div>
+
+<main>
+    <div class="toolbar">
+        <div class="search-wrap">
+            <span class="search-icon">🔍</span>
+            <input type="text" id="searchInput" placeholder="Search by name, email, company...">
+        </div>
+        <div class="filter-group">
+            <select id="statusFilter"><option value="">All Status</option><option value="active">Active</option><option value="inactive">Inactive</option></select>
+            <button id="applyFilterBtn" class="btn-ghost">Apply</button>
+            <button id="addClientBtn" class="btn-primary">+ Add Client</button>
+        </div>
+    </div>
+
+    <!-- Bulk action bar -->
+    <div id="bulkBar" class="bulk-bar hidden">
+        <span id="selectedCount">0</span> selected
+        <button id="bulkDeleteBtn" class="btn-danger">Delete Selected</button>
+        <button id="bulkActiveBtn" class="btn-success">Mark Active</button>
+        <button id="bulkInactiveBtn" class="btn-warning">Mark Inactive</button>
+        <button id="clearSelectionBtn" class="btn-ghost">Clear</button>
+    </div>
+
+    <div class="table-wrap">
+        <table id="clientTable">
+            <thead>
+            <tr>
+                <th><input type="checkbox" id="selectAll"></th>
+                <th data-sort="id">#</th>
+                <th data-sort="name">Name</th>
+                <th data-sort="email">Email</th>
+                <th>Phone</th>
+                <th>Company</th>
+                <th data-sort="status">Status</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody id="clientBody">
+            <tr><td colspan="8" class="loading">Loading clients...</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Pagination -->
+    <div class="pagination" id="pagination">
+        <button id="prevPage" disabled>Previous</button>
+        <span id="pageInfo">Page 1</span>
+        <button id="nextPage">Next</button>
+        <select id="pageSize"><option value="5">5 per page</option><option value="10" selected>10 per page</option><option value="20">20 per page</option><option value="50">50 per page</option></select>
+    </div>
+</main>
+
+<!-- Modals (same as before but improved) -->
+<div id="modalBackdrop" class="modal-backdrop">
+    <div class="modal">
+        <div class="modal-header"><h2 id="modalTitle">Add Client</h2><button id="modalClose" class="modal-close">✕</button></div>
+        <div class="modal-body">
+            <div id="formError" class="form-error hidden"></div>
+            <input type="hidden" id="clientId">
+            <div class="field"><label>Name *</label><input type="text" id="clientName" placeholder="John Doe"><span class="field-error" id="nameError"></span></div>
+            <div class="field"><label>Email *</label><input type="email" id="clientEmail" placeholder="john@example.com"><span class="field-error" id="emailError"></span></div>
+            <div class="field"><label>Phone</label><input type="text" id="clientPhone"></div>
+            <div class="field"><label>Company</label><input type="text" id="clientCompany"></div>
+            <div class="field"><label>Address</label><input type="text" id="clientAddress"></div>
+            <div class="field"><label>Status</label><select id="clientStatus"><option value="active">Active</option><option value="inactive">Inactive</option></select></div>
+        </div>
+        <div class="modal-footer"><button id="cancelBtn" class="btn-ghost">Cancel</button><button id="saveBtn" class="btn-primary">Save</button></div>
+    </div>
+</div>
+
+<div id="toast" class="toast"></div>
+<script src="app.js"></script>
 </body>
 </html>
